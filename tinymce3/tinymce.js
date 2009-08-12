@@ -1,10 +1,8 @@
 
 function init() 
 {
-		cleanup : false,
-
-   tinyMCEPopup.resizeToInnerSize();
-
+	cleanup : false,
+	tinyMCEPopup.resizeToInnerSize();
 }
 
 /*
@@ -60,25 +58,25 @@ function closeOntology(suffix)
 		preview = document.getElementById('preview').value;
 		starting_tag = preview.substring(0,preview.indexOf(' '));
 		closing = '</'+starting_tag.substring(1,starting_tag.length)+'>';
-    window.document.RDFa.preview.value = document.getElementById('preview').value + closing;
-	window.document.RDFa.closing_tag.value = '';
-    closetag.style.display = "none";
-
+    	window.document.RDFa.preview.value = document.getElementById('preview').value + closing;
+		window.document.RDFa.closing_tag.value = '';
+    	closetag.style.display = "none";
     }
 }
 
 /*
 add @About Url 
 */
-function addAboutUrl(url) 
+function addAboutUrl() 
 {
-		 alert('RDFa');
-		preview = document.getElementById('preview').value;
-		 window.document.RDFa.tx.value=preview;
-		 window.document.RDFa.tz.value = document.getElementById('dublin_core').value;
-		 window.document.RDFa.selection.value = 'about';
-		 
-		 window.document.forms['RDFa'].submit();
+	var curie_value = document.RDFa.curie.selectedIndex;
+	if(document.getElementById('at_about').value != '' && document.RDFa.curie.options[curie_value].value != '') {
+	 preview = document.getElementById('preview').value;
+	 window.document.RDFa.tx.value=preview;
+	 window.document.RDFa.tz.value = document.getElementById('dublin_core').value;
+	 window.document.RDFa.selection.value = 'about';
+	 window.document.forms['RDFa'].submit();
+	}
 }
 
 

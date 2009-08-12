@@ -22,7 +22,7 @@ add_filter('tiny_mce_before_init', 'my_change_mce_options');
 
 function rdfa_addbuttons() 
 {
-        // Don't bother doing this stuff if the current user lacks permissions
+    // Don't bother doing this stuff if the current user lacks permissions
 	if ( !current_user_can('edit_posts') && !current_user_can('edit_pages') ) return;
 	 
 	// Add only in Rich Editor mode

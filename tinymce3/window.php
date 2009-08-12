@@ -34,7 +34,7 @@ $onto_suffix=array_combine($onto_arr,$suffix_arr);
 
 $last_preview=NULL;
 $ontology=$_POST['tz'];
-$preview=stripslashes($_POST['tx']);
+$preview = stripslashes($_POST['tx']);
 
 $selection=$_POST['selection'];
 
@@ -60,12 +60,21 @@ switch ($selection) {
 		
     case 'about':
 		
-		if(validateURL($_POST['at_about'])) {
-	  		$preview = substr($preview, 0, strpos($preview, ' ')). ' about="' .$_POST['at_about'] . '" ' .stristr($preview, ' '); 
+		if(validateURL($_POST['at_about']) && $_POST['curie'] != "") {
+		
+			
+			$preview_array = explode('>',$preview);
+
+			if(substr_count($preview_array[0], $_POST['curie']) != 0) {
+					$first_token = explode($_POST['curie'].'="', $preview_array[0]);
+					$second_token = stristr($first_token[1], '"');
+					$preview = $first_token[0].$_POST['curie'].'="' .$_POST['at_about'].$second_token.'>'.$preview_array[1].'>';					
+			} else {
+	  			$preview = substr($preview, 0, strpos($preview, ' ')). ' '.$_POST['curie'].'="' .$_POST['at_about'] . '" ' .stristr($preview, ' '); 
+			}
 		}
   
         $last_display_preview = $preview;
-		
         break;
 		
     case '':
@@ -131,15 +140,15 @@ switch ($selection) {
             </td>
           </tr>
           <tr>
-            <td nowrap="nowrap"><label for="Preview"><?php _e("@about", 'rdfa'); ?></label></td>
+            <td nowrap="nowrap"><label for="Preview"><?php _e("RDFa Attributes", 'rdfa'); ?></label></td>
             <td></td>
             <td>
-				<select>
-					 <option selected>Select</option>
-					<option value="about">About</option>
-					<option value="resource">Resource</option>
+				<select id="curie" name="curie" onChange="addAboutUrl()">
+					<option value=""<?php if(validateURL($_POST['at_about'])) { ?> selected<?php } ?>>Select</option>
+					<option value="about"<?php if(!validateURL($_POST['at_about']) && $_POST['curie'] == 'about') { ?> selected<?php } ?>>About</option>
+					<option value="resource"<?php if(!validateURL($_POST['at_about']) && $_POST['curie'] == 'resource') { ?> selected<?php } ?>>Resource</option>
 				</select> 
-				<input type="text" id="at_about" onBlur="addAboutUrl(this)" value="<?php echo $_POST['at_about']; ?>" size="35" name="at_about"/></td>
+				<input type="text" id="at_about" onBlur="addAboutUrl()" value="<?php if(!validateURL($_POST['at_about'])) { echo $_POST['at_about']; } ?>" size="35" name="at_about"/></td>
          </tr>
           <tr>
             <td nowrap="nowrap"><label for="Preview"><?php _e("Preview", 'rdfa'); ?></label></td>

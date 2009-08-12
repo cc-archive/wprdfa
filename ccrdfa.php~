@@ -514,4 +514,5 @@ function tmve_mce_valid_elements( $init ) {
 }
 
 add_filter('tiny_mce_before_init', 'tmve_mce_valid_elements');
+
 ?>
