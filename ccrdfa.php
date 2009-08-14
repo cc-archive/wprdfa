@@ -484,34 +484,11 @@ function wpccrdfa_admin_footer() {
 	}
 }
 
-
-/**
- * Add to extended_valid_elements for TinyMCE
- *
- * @param $init assoc. array of TinyMCE options
- * @return $init the changed assoc. array
- */
-function tmve_mce_valid_elements( $init ) {
-
-    $eleList = array();
-            $eleList[0] = "span[class|title|width|height|align|about|property]";
-
-    // Extended string to add to tinyMCE.init();
-    $extStr = implode(',', $eleList);
-    // Only add ext valid ele's if a correct string was made
-    if ( $extStr != null && $extStr != '' ) {
-        // Add to extended_valid_elements if it alreay exists
-        if ( isset( $init['extended_valid_elements'] ) 
-               && ! empty( $init['extended_valid_elements'] ) ) {
-            $init['extended_valid_elements'] .= ',' . $extStr;
-        } else {
-            $init['extended_valid_elements'] = $extStr;
-        }
-    }
-
-    // Super important: return $init!
-    return $init;
+function remove_ccrdfa_highlight( $content ){
+ 	return str_replace('ccrdfa_highlight', '', str_replace('class="ccrdfa_highlight"', '', $content));
 }
 
-add_filter('tiny_mce_before_init', 'tmve_mce_valid_elements');
+add_filter('the_content', 'remove_ccrdfa_highlight' , 1 );
+add_filter('the_excerpt', 'remove_ccrdfa_highlight');
+
 ?>

@@ -12,7 +12,6 @@ The selected values will be displayed as a preview in pop up window.
 function getSelText(test)
 {
     txt = tinyMCE.activeEditor.selection.getContent();
-    // pre = document.getElementById('preview').value;
     window.document.RDFa.tx.value = txt;
     if(test==''){
     document.RDFa.preview.value = txt;  
@@ -57,7 +56,7 @@ function closeOntology(suffix)
 	if(document.getElementById('preview').value != "") {
 		preview = document.getElementById('preview').value;
 		starting_tag = preview.substring(0,preview.indexOf(' '));
-		closing = '</'+starting_tag.substring(1,starting_tag.length)+'>';
+		closing = '</'+ starting_tag.substring(1,starting_tag.length)+'>';
     	window.document.RDFa.preview.value = document.getElementById('preview').value + closing;
 		window.document.RDFa.closing_tag.value = '';
     	closetag.style.display = "none";
@@ -85,10 +84,12 @@ Insert details to html editor as a RDFa format.
 */
 function insertDetail() 
 {
-        var tagtext;
-        var tagtext = document.getElementById('preview').value;
-	window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, tagtext);
+	var tagtext = document.getElementById('preview').value;
+	
+	highlighted_tagtext = tagtext.substring(0, tagtext.indexOf(' ')) + ' class="ccrdfa_highlight"' + tagtext.substring(tagtext.indexOf(' '), tagtext.length);
+	window.tinyMCE.execInstanceCommand('content', 'mceReplaceContent', false, highlighted_tagtext);
 	tinyMCEPopup.editor.execCommand('mceRepaint');
+	
 	tinyMCEPopup.close();
 	return;
 }   

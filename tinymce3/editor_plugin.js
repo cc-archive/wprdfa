@@ -24,7 +24,7 @@
 					file : url + '/window.php',
 					width : 600 + ed.getLang('RDFa.delta_width', 0),
 					height : 250 + ed.getLang('RDFa.delta_height', 0),
-                                        extended_valid_elements : "span[property|value]",
+                    extended_valid_elements : "span[about|resource|property|value]",
 					inline : 1
 				}, {
 					plugin_url : url // Plugin absolute URL
@@ -74,8 +74,8 @@
 			return {
 					longname  : 'RDFa',
 					author 	  : 'Dinishika Weerarathna',
-					authorurl : 'http://xyz.com',
-					infourl   : 'http://xyz.com',
+					authorurl : 'http://dinishi.com/',
+					infourl   : 'http://dinishi.com/',
 					version   : "2.0"
 			};
 		}

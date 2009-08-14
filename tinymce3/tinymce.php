@@ -4,7 +4,7 @@
 function my_change_mce_options($init) 
 {
        // Command separated string of extended elements
-       $ext = 'span[property|name|class|style]';
+       $ext = 'span[property|name|class|style|about|resource]';
 
        // Add to extended_valid_elements if it alreay exists
        if ( isset( $init['extended_valid_elements'] ) ) {
@@ -12,7 +12,8 @@ function my_change_mce_options($init)
        } else {
          $init['extended_valid_elements'] = $ext;
        }
- 
+	   $init['content_css'] = RDFa_URLPATH.'tinymce3/wpccrdfa_css.css';
+
       // Super important: return $init!
       return $init;
 }
